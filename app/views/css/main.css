@@ -1,0 +1,957 @@
+/************************************************
+Archivo css principal
+
+Proyecto: API Rest Full - Codeando.org
+Author: Paulo Andrade
+Email: source.compug@mail.com
+Web: http://www.pauloandrade1.com
+************************************************/
+
+/************************************************
+OPCIONES GENERALES
+************************************************/
+*
+{
+	margin: 0;
+	padding: 0;
+}
+a
+{
+	color: #DDA02C;
+	text-decoration: none;
+	transition: all 0.25s ease;
+}
+a:hover
+{
+	color: #999;
+	text-decoration: none;
+}
+body
+{
+	color: #222;
+	font-family: arial, helvetica;
+	font-size: 16px;
+	line-height: 1.4;
+}
+html
+{
+	height: 101%;
+}
+#js
+{
+	transition: all 0.5s ease;
+}
+#lang
+{
+	text-align: right;
+	font-size: 0;
+	padding-bottom: 10px;
+}
+#lang #left
+{
+	font-size: 16px;
+	padding: 5px 10px 5px 15px;
+	border: 1px solid #eee;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	color: #eee;
+	transition: all 0.25s ease;
+}
+#lang #left:hover
+{
+	cursor: pointer;
+	color: #222;
+	background-color: #eee;
+}
+#lang #right
+{
+	font-size: 16px;
+	padding: 5px 15px 5px 10px;
+	border: 1px solid #eee;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	color: #eee;
+	transition: all 0.25s ease;
+}
+#lang #right:hover
+{
+	cursor: pointer;
+	color: #222;
+	background-color: #eee;
+}
+#php
+{
+	display: none;
+	opacity: 0;
+	transition: all 0.5s ease;
+}
+#wrapper
+{
+	max-width: 1124px;
+	margin: 0 auto;
+	background-color: #fcfcfc;
+	padding: 10px;
+	min-height: 500px;
+}
+.code
+{
+	background: #272822;
+	border-radius: 3px;
+	color: #fcfcfc;
+	font-size: 14px;
+	margin: 10px 0;
+	overflow-x: auto;
+	padding: 10px;
+}
+.code span
+{
+	float:none !important;
+}
+.error
+{
+	background-color: #F37A43;
+	color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	transform: translatey(-60px);
+	.margin-top: -60px;
+	transition-duration: .25s;
+	z-index: 999;
+}
+.none
+{
+	display: none;
+}
+.nota
+{
+	border-radius: 3px;
+	border: 1px solid #D9DD71;
+	background-color: #FBFF93;
+	padding: 10px;
+}
+.nota img
+{
+	width: 50px;
+	float: left;
+}
+.select
+{
+	background-color: #176DEE;
+	border: 1px solid #176DEE !important;
+	color: #fcfcfc;
+}
+.select:hover
+{
+	background-color: #176DEE !important;
+	color: #fcfcfc !important;	
+}
+.success
+{
+	background-color: green;
+	color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	transform: translatey(-60px);
+	.margin-top: -60px;
+	transition-duration: .25s;
+	z-index: 999;
+}
+
+/************************************************
+ESTILOS HEADER
+************************************************/
+header
+{
+	background-color: #273B47;
+	color: #fcfcfc;
+	width: 100%;
+}
+header img
+{
+	width: 50px;
+	display: inline-block;
+	vertical-align: middle;
+}
+header h1
+{
+	font-size: 1.2em;
+	display: inline-block;
+	vertical-align: middle;
+}
+#header
+{
+	max-width: 1124px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+/************************************************
+ESTILOS NAV
+************************************************/
+nav
+{
+	padding: 10px 0;
+	text-align: right;
+}
+nav a
+{
+	color: #fcfcfc;
+	transition: all 0.25s ease;
+}
+nav a:hover
+{
+	color: #fcfcfc;
+}
+nav li
+{
+	border-radius: 5px;
+	display: inline-block;
+	font-size: 16px;
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+	vertical-align: top;
+}
+nav li:hover
+{
+	background-color: #227690;
+}
+nav ul
+{
+	font-size: 0;
+}
+#index #nav1,
+#documentacion #nav2,
+#contacto #nav3
+{
+	background-color: #227690;
+	border-radius: 5px;
+	color: #fcfcfc;
+	padding: 5px 10px;
+}
+#display-menu
+{
+	display: none;
+	position: fixed;
+	right: 15px;
+	top: 15px;
+	transition: all 0.25s ease;
+	z-index: 998;
+}
+#display-menu:hover
+{
+	cursor: pointer;
+	opacity: 0.8;
+}
+#menu-contenido
+{
+	padding: 20px 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	max-width: 100%;
+	transition: all 0.25s ease;
+	background-color: #eee;
+	transform: translateY('-200px');
+	opacity: 0;
+	z-index: 999;
+}
+#menu-contenido ul
+{
+	width: 100%;
+	font-size: 0;
+	text-align: center;
+}
+#menu-contenido li
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	border-radius: 5px;
+	padding: 10px 0;
+	width: 45%;
+	text-align: center;
+	transition: all 0.25s ease;
+}
+#menu-contenido li:hover
+{
+	background-color: #E0E3E5;
+}
+#menu-contenido a
+{
+	color: #222;
+	transition: all 0.25s ease;
+}
+#menu-contenido a:hover
+{
+	color: #999;
+	cursor: pointer;
+}
+
+/************************************************
+ESTILOS PAGINA INDEX
+************************************************/
+
+#index h2
+{
+	color: #227690;
+	padding: 15px 0;
+}
+
+/************************************************
+ESTILOS PAGINA DOCUMENTACION
+************************************************/
+
+#doc
+{
+	font-size: 0;
+}
+#doc_1
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+}
+#doc_1 a
+{
+	color: #222;
+	transition: all 0.25s ease;
+}
+#doc_1 a:hover
+{
+	color: #fcfcfc;
+}
+#doc_1 h2
+{
+	color: #227690;
+	padding: 15px 0;
+}
+#doc_1 nav
+{
+
+}
+#doc_1 ul
+{
+	font-size: 0;
+	list-style: none;
+}
+#doc_1 li
+{
+	font-size: 16px;
+	padding: 5px 10px;
+	border-radius: 3px;
+}
+#doc_1 li:hover
+{
+	background-color: #227690;
+}
+#doc_2
+{
+	font-size: 18px;
+	display: inline-block;
+	vertical-align: top;
+	width: 75%;
+}
+#doc_2 h2
+{
+	color: #227690;
+	padding: 15px 0;
+	text-align: center;
+}
+#doc_2 p
+{
+	margin-bottom: 1em;
+}
+#doc_2 #content
+{
+	padding: 0 10px;
+}
+#doc_2 .doc_menu
+{
+	font-size: 0;
+	display: none;
+}
+#doc_2 .doc_menu .doc_menu_1
+{
+	font-size: 16px;
+	text-align: left;
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+}
+#doc_2 .doc_menu .doc_menu_1 a
+{
+	background-color: #009857;
+	border-bottom-left-radius: 25px;
+	border-top-left-radius: 25px;
+	color: #fcfcfc;
+	padding: 5px 15px;
+	transition: all 0.25s ease;
+}
+#doc_2 .doc_menu .doc_menu_1 a:hover,
+#doc_2 .doc_menu .doc_menu_2 a:hover
+{
+	cursor: pointer;
+	background-color: #22ba79;
+}
+#doc_2 .doc_menu .doc_menu_2
+{
+	font-size: 16px;
+	text-align: right;
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+}
+#doc_2 .doc_menu .doc_menu_2 a
+{
+	background-color: #009857;
+	border-bottom-right-radius: 25px;
+	border-top-right-radius: 25px;
+	color: #fcfcfc;
+	padding: 5px 15px;
+	transition: all 0.25s ease;
+}
+.selectable
+{
+	background-color: #227690;
+}
+.selectable a
+{
+	color: #fcfcfc !important;
+}
+
+/************************************************
+ESTILOS PAGINA DE CONTACTO
+************************************************/
+
+#contacto_content h2
+{
+	color: #227690;
+	padding: 15px 0;
+}
+#contacto_content input[type="text"]
+{
+	padding: 5px 10px;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	width: 80%;
+	transition: all 0.25s ease;
+}
+#contacto_content input[type="text"]:focus
+{
+	background-color: #eee;
+}
+#contacto_content input[type="submit"]
+{
+	padding: 10px 15px;
+	background-color: #176DEE;
+	border: 1px solid #176DEE;
+	color: #fcfcfc;
+	border-radius: 3px;
+	transition: all 0.25s ease;
+}
+#contacto_content input[type="submit"]:hover
+{
+	cursor: pointer;
+	background-color: #398fff;
+}
+#contacto_content option
+{
+	font-size: 16px;
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+}
+#contacto_content option:hover
+{
+	cursor: pointer;
+}
+#contacto_content select
+{
+	border-radius: 3px;
+	border: 1px solid #ddd;
+}
+#contacto_content textarea
+{
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	height: 150px;
+	max-height: 250px;
+	max-width: 80%;
+	min-height: 150px;
+	min-width: 80%;
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+	width: 80%;
+}
+#contacto_content textarea:focus
+{
+	background-color: #eee;
+}
+
+/*********************************************************
+SISTEMA DE LOGIN
+*********************************************************/
+
+/** SISTEMA DE LOGIN **/
+
+#button_fb
+{
+	background-color: #3F5C9A;
+	border: 1px solid #1d3a78;
+	border-radius: 3px;
+	color: #fcfcfc;
+	font-size: 1.2em;
+	margin-top: 10px;
+	padding: 10px;
+	transition: all 0.25s ease;
+	width: 70%;
+}
+#button_fb:hover
+{
+	background-color: #1d3a78;
+	cursor: pointer;
+}
+#form
+{
+	display: block;
+}
+#form, #register, #recover
+{
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 100px auto 0 auto;
+	max-width: 480px;
+	padding: 3em 0;
+}
+#form #form_login input[type="text"],
+#form #form_login input[type="password"],
+#register #form_register input[type="text"],
+#register #form_register input[type="password"],
+#recover #form_recover input[type="text"]
+{
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 1em;
+	padding: 10px;
+	transition: all 0.25s ease;
+	width: 80%;
+}
+#form #form_login input[type="text"]:focus,
+#form #form_login input[type="password"]:focus,
+#register #form_register input[type="text"]:focus,
+#register #form_register input[type="password"]:focus,
+#recover #form_recover input[type="text"]:focus
+{
+	background-color: #eee;
+}
+#form #form_login input:first-child,
+#register #form_register input:first-child,
+#recover #form_recover input:first-child
+{
+	margin-top: 1em;
+}
+#form #form_login input[type="submit"],
+#register #form_register input[type="submit"],
+#recover #form_recover input[type="submit"]
+{
+	background-color: #21A957;
+	border: 1px solid #008735;
+	border-radius: 3px;
+	color: #fcfcfc;
+	font-size: 1.2em;
+	padding: 10px;
+	transition: all 0.25s ease;
+	width: 70%;
+}
+#form #form_login input[type="submit"]:hover,
+#register #form_register input[type="submit"]:hover,
+#recover #form_recover input[type="submit"]:hover
+{
+	background-color: #008735;
+	cursor: pointer;
+}
+#form #form_login label
+{
+	font-size: 2em;
+	font-weight: bold;
+}
+#form #form_login .logo,
+#register #form_register .logo,
+#recover #form_recover .logo
+{
+	background-color: #fcfcfc;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	height: 110px;
+	margin: 0 auto;
+	margin-top: -100px;
+	width: 110px;
+}
+#form #form_login .logo img,
+#register #form_register .logo img,
+#recover #form_recover .logo img
+{
+	width: 100px;
+	height: 80px;
+	padding-top: 15px;
+}
+#form .login_option,
+#register .login_option,
+#recover .login_option
+{
+	margin-top: 15px;
+}
+#form .login_option span,
+#register .login_option span,
+#recover .login_option span
+{
+	transition: all 0.25s ease;
+}
+#form .login_option span:hover,
+#register .login_option span:hover,
+#recover .login_option span:hover
+{
+	color: #FFC04E;
+	cursor: pointer;
+}
+#login
+{
+	background-color: #fcfcfc;
+	text-align: center;
+}
+#login_box
+{
+	background-color: rgba(0,0,0,0.5);
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	top: 0;
+	transition: all 1s ease;
+	z-index: 998;
+}
+#login_box #login_close
+{
+	background-color: #F37A43;
+	border-radius: 100%;
+	padding: 10px 15px;
+	color: #fcfcfc;
+	position: fixed;
+	right: 0;
+	top: 0;
+	margin-top: 15px;
+	margin-right: 15px;
+	font-size: 1.2em;
+	transition: all 0.25s ease;
+	z-index: 999;
+}
+#login_box #login_close:hover
+{
+	background-color: #d15821;
+	color: #dadada;
+	cursor: pointer;
+}
+#login_redes
+{
+	padding-top: 15px;
+}
+#register,
+#recover
+{
+	display: none;
+}
+#register #form_register label,
+#recover #form_recover label
+{
+	font-weight: bold;
+}
+.login_button
+{
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+	background-color: #E74C3C;
+	border: 1px solid #C52A1A;
+	border-bottom: 3px solid #C52A1A;
+	border-radius: 3px;
+	color: #fcfcfc;
+}
+.login_button:hover
+{
+	background-color: #1AD81D;
+	border: 1px solid #08b60b;
+	border-bottom: 3px solid #08b60b;
+	cursor: pointer;
+}
+.login_in
+{
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+	background-color: #1AD81D;
+	border: 1px solid #08b60b;
+	border-bottom: 3px solid #08b60b;
+	border-radius: 3px;
+	color: #fcfcfc;
+}
+.login_in:hover
+{
+	cursor: pointer;
+	background-color: #08b60b;
+}
+
+/************************************************
+ESTILOS PAGINA 404
+************************************************/
+
+.container input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.container h1 {
+    margin: 0 10px;
+    font-size: 50px;
+    text-align: center;
+}
+.container h1 span {
+    color: #bbb;
+}
+.container h3 {
+    margin: 1.5em 0 0.5em;
+}
+.container p {
+    margin: 1em 0;
+}
+.container ul {
+    padding: 0 0 0 40px;
+    margin: 1em 0;
+}
+
+.container {
+}
+
+/* google search */
+
+#goog-fixurl ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#goog-fixurl form {
+    margin: 0;
+}
+
+#goog-wm-qt,
+#goog-wm-sb {
+    border: 1px solid #bbb;
+    font-size: 16px;
+    line-height: normal;
+    vertical-align: top;
+    color: #444;
+    border-radius: 2px;
+}
+
+#goog-wm-qt {
+    width: 220px;
+    height: 20px;
+    padding: 5px;
+    margin: 5px 10px 0 0;
+    box-shadow: inset 0 1px 1px #ccc;
+}
+
+#goog-wm-sb {
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    margin: 5px 0 0;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+    background-image: -moz-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+    background-image: -ms-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+    background-image: -o-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    *overflow: visible;
+    *display: inline;
+    *zoom: 1;
+}
+
+#goog-wm-sb:hover,
+#goog-wm-sb:focus {
+    border-color: #aaa;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8;
+}
+
+#goog-wm-qt:hover,
+#goog-wm-qt:focus {
+    border-color: #105cb6;
+    outline: 0;
+    color: #222;
+}
+
+.container input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+/************************************************
+ESTILOS FOOTER
+************************************************/
+
+footer
+{
+	background-color: #212121;
+	color: #ccc;
+	padding: 20px 0;
+	text-align: center;
+	width: 100%;
+}
+footer a
+{
+	color: #ccc;
+	transition: all 0.25s ease;
+}
+footer a:hover
+{
+	text-decoration: underline;
+}
+
+/*********************************************************
+Configuracion resaltador de sintaxis
+*********************************************************/
+/* atributos html */
+.atn
+{
+	color: #7FE22E !important;
+}
+/* strings */
+.atv, .str
+{
+	color: #E6DB74 !important;
+}
+/* comentarios */
+.com
+{
+	color: #75715E !important;
+}
+.dec
+{
+	color: white !important;
+}
+/* palabras claves */
+.kwd
+{
+	color: #66D9EF !important;
+}
+/* numeros */
+.lit
+{
+	color: #8481FF !important;
+}
+/* operadores */
+.pun
+{
+	color: #fff !important;
+}
+.pln
+{
+	color: #fcfcfc !important;
+}
+.prettyprint
+{
+	background: #272822 !important;
+}
+/* etiquetas html */
+.tag
+{
+	color: #F92672 !important;
+}
+.typ
+{
+	color: #66D9EF !important;
+}
+
+/****************************************************************
+MEDIA QUERYS
+****************************************************************/
+
+@media screen and (max-width: 480px){
+	nav
+	{
+		display: none;
+	}
+	#display-menu
+	{
+		display: block;
+	}
+	#doc_1
+	{
+		display: none;
+	}
+	#doc_2
+	{
+		font-size: 16px;
+		width: 100%;
+	}
+	#doc_2 .doc_menu
+	{
+		display: block;
+	}
+	#doc_2 .doc_menu .doc_menu_1
+	{
+		width: 100%;
+		padding-bottom: 10px;
+	}
+	#doc_2 .doc_menu .doc_menu_2
+	{
+		width: 100%;
+	}
+	#menu-contenido li
+	{
+		width: 90%;
+	}
+}
+@media screen and (max-width: 750px){
+	nav
+	{
+		display: none;
+	}
+	#display-menu
+	{
+		display: block;
+	}
+	#doc_1
+	{
+		display: none;
+	}
+	#doc_2
+	{
+		width: 100%;
+	}
+	#doc_2 .doc_menu
+	{
+		display: block;
+	}	
+}
+@media screen and (max-width: 950px){
+	
+}

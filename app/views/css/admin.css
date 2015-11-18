@@ -1,0 +1,364 @@
+/************************************************
+Archivo css para el admin
+
+Proyecto: API Rest Full - Codeando.org
+Author: Paulo Andrade
+Email: source.compug@mail.com
+Web: http://www.pauloandrade1.com
+************************************************/
+
+/************************************************
+OPCIONES GENERALES
+************************************************/
+*
+{
+	margin: 0;
+	padding: 0;
+}
+a
+{
+	color: #DDA02C;
+	text-decoration: none;
+	transition: all 0.25s ease;
+}
+a:hover
+{
+	color: #999;
+	text-decoration: none;
+}
+body
+{
+	color: #222;
+	font-family: arial, helvetica;
+	font-size: 16px;
+	line-height: 1.4;
+}
+html
+{
+	height: 101%;
+}
+#wrapper
+{
+	max-width: 1124px;
+	margin: 0 auto;
+	background-color: #fcfcfc;
+	padding: 10px;
+	min-height: 500px;
+}
+.cargando_min
+{
+	text-align: center;
+}
+.cargando_min img
+{
+	width: 16px;
+}
+.error
+{
+	background-color: #F37A43;
+	color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	transform: translatey(-60px);
+	.margin-top: -60px;
+	transition-duration: .25s;
+	z-index: 999;
+}
+.none
+{
+	display: none;
+}
+.nota
+{
+	border-radius: 3px;
+	border: 1px solid #D9DD71;
+	background-color: #FBFF93;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.nota img
+{
+	width: 50px;
+	float: left;
+}
+.success
+{
+	background-color: green;
+	color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	transform: translatey(-60px);
+	.margin-top: -60px;
+	transition-duration: .25s;
+	z-index: 999;
+}
+
+/************************************************
+ESTILOS HEADER
+************************************************/
+header
+{
+	background-color: #273B47;
+	color: #fcfcfc;
+	width: 100%;
+}
+header img
+{
+	width: 50px;
+	display: inline-block;
+	vertical-align: middle;
+}
+header h1
+{
+	font-size: 1.2em;
+	display: inline-block;
+	vertical-align: middle;
+}
+#header
+{
+	max-width: 1124px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+/************************************************
+ESTILOS NAV
+************************************************/
+nav
+{
+	
+}
+nav a
+{
+	color: #222;
+	transition: all 0.25s ease;
+}
+nav a:hover
+{
+	color: #fcfcfc;
+}
+nav li
+{
+	border-radius: 3px;
+	font-size: 16px;
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+}
+nav li:hover
+{
+	background-color: #227690;
+}
+nav ul
+{
+	font-size: 0;
+	list-style: none;
+}
+
+/************************************************
+ESTILOS FORMULARIOS
+************************************************/
+
+form input[type="submit"]
+{
+	padding: 10px 15px;
+	background-color: #176DEE;
+	border: 1px solid #154bcc;
+	color: #fcfcfc;
+	border-radius: 3px;
+	transition: all 0.25s ease;
+	font-size: 16px;
+}
+form input[type="submit"]:hover
+{
+	cursor: pointer;
+	background-color: #398fff;
+}
+form input[type="text"]
+{
+	padding: 5px 10px;
+	width: 80%;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	transition: all 0.25s ease;
+}
+form input[type="text"]:focus
+{
+	background-color: #eee;
+}
+form p
+{
+	margin-bottom: 10px;
+}
+form textarea
+{
+	padding: 5px 10px;
+	width: 80%;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	transition: all 0.25s ease;	
+}
+form textarea:focus
+{
+	background-color: #ddd;
+}
+
+/************************************************
+ESTILOS TABLAS DE INFORMACION
+************************************************/
+
+#table
+{
+	background-color: #227690;
+	border: 1px solid #005470;
+	border-radius: 3px;
+	color: #fcfcfc;
+	text-align: center;
+	padding: 5px 10px;
+	font-size: 0;
+}
+#table_text
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 75%;
+}
+#table_action
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+}
+.table
+{
+	padding: 5px 10px;
+	font-size: 0;
+	transition: all 0.25s ease;
+}
+.table:hover,
+.table_info:hover
+{
+	background-color: #eee;
+}
+.table_info
+{
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+}
+.table_info a:hover
+{
+	cursor: pointer;
+	opacity: 0.6;
+}
+.table_text
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 75%;
+}
+.table_action
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+}
+.table_action a:hover
+{
+	cursor: pointer;
+	opacity: 0.6;
+}
+
+/************************************************
+ESTILOS PAGINA ADMIN
+************************************************/
+
+#admin
+{
+	font-size: 0;
+}
+#admin_1
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+}
+#admin_1 h2
+{
+	color: #227690;
+	padding: 15px 0;
+	text-align: center;
+}
+#admin_2
+{
+	font-size: 16px;
+	display: inline-block;
+	vertical-align: top;
+	width: 75%;
+}
+#admin_2 h2
+{
+	color: #227690;
+	padding: 15px 0;
+}
+#admin_2 #content
+{
+	padding: 0 10px;
+}
+#menu
+{
+	text-align: center;
+	padding-bottom: 10px;
+}
+#menu a
+{
+	background-color: #227690;
+	color: #fcfcfc;
+	border-radius: 3px;
+	border: 1px solid #005470;
+	padding: 5px 10px;
+	transition: all 0.25s ease;
+}
+#menu a:hover
+{
+	background-color: #4498b2;
+}
+
+/************************************************
+ESTILOS FOOTER
+************************************************/
+
+footer
+{
+	background-color: #212121;
+	color: #ccc;
+	padding: 20px 0;
+	text-align: center;
+	width: 100%;
+}
+footer a
+{
+	color: #ccc;
+	transition: all 0.25s ease;
+}
+footer a:hover
+{
+	text-decoration: underline;
+}
