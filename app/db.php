@@ -20,7 +20,7 @@ function getConnection()
 			$host = 'localhost';
 			$user = 'root';
 			$pass = '';
-			$db = '';
+			$db = 'codeando';
 		} else {
 			$host = 'localhost';
 			$user = '';

@@ -23,7 +23,7 @@ class Db
 			$this->_server = 'localhost';
 			$this->_user = 'root';
 			$this->_pass = '';
-			$this->_db = '';
+			$this->_db = 'api_code';
 		} else {
 			$this->_server = 'localhost';
 			$this->_user = '';
