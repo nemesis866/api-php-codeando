@@ -21,6 +21,7 @@ $app->get('/cursos/', function () use($app){
 		$conn = null;
 
 		$app->response->headers->set("Content-type", "application/json");
+		$app->response->headers->set("Access-Control-Allow-Origin", "*");
 		$app->response->status(200);
 		$app->response->body(json_encode($cursos));
 	} catch (PDOException $err){
