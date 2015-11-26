@@ -96,3 +96,28 @@ $app->get('/cursos/discusion/:id/respuestas/', function ($id) use($app){
 		echo 'Error: '.$err->getMessage();
 	}
 });
+
+// Obtenemos registro de usuarios
+$app->get('/users/:user/:password', function ($user, $password) use($app){
+	try{
+		$conn = getConnection();
+		$dbh = $conn->prepare("SELECT * FROM usuarios WHERE username=? AND password=?");
+		$dbh->execute(array(strtolower($user), md5($password)));
+		$users = $dbh->fetchAll(PDO::FETCH_ASSOC);
+		$conn = null;
+
+		if(count($users) > 0){
+			$conn = getConnection();
+			$dbh = $conn->prepare("UPDATE usuarios SET ultimo_acceso=NOW() WHERE username=?");
+			$dbh->execute(array(strtolower($user)));
+			$conn = null;
+		}
+
+		$app->response->headers->set("Content-type", "application/json");
+		$app->response->headers->set("Access-Control-Allow-Origin", "*");
+		$app->response->status(200);
+		$app->response->body(json_encode($users));
+	} catch (PDOException $err){
+		echo 'Error: '.$err->getMessage();
+	}
+});
