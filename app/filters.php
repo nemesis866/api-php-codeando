@@ -10,5 +10,5 @@ Web: http://www.pauloandrade1.com
 
 // Creamos las condiciones para los parametros
 \Slim\Route::setDefaultConditions(array(
-    'id' => '[0-9]'
+    'id' => '[0-9]{0,3}'
 ));
