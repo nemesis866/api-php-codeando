@@ -14,9 +14,13 @@ if(!defined('SEGURIDAD')) die('Acceso denegado');
 // Mostramos todos los cursos
 $app->get('/cursos/', function () use($app){
 	$conn = getConnection();
+	$sql = "SELECT C.id_curso,C.categoria,C.titulo,C.subtitulo,C.img,C.url,C.requeriment,C.description,
+			U.id id_autor,U.nombre,U.fbid,U.puntos,U.bio biografia,U.google,U.twitter
+			FROM cursos C INNER JOIN usuarios U ON (C.autor = U.id)
+			WHERE public='YES' ORDER BY C.fecha ASC";
 
 	try{
-		$dbh = $conn->prepare("SELECT * FROM cursos WHERE public='YES' ORDER BY fecha ASC");
+		$dbh = $conn->prepare($sql);
 		$dbh->execute();
 		$cursos = $dbh->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,10 +37,14 @@ $app->get('/cursos/', function () use($app){
 // Mostramos informacion de un curso en especifico
 $app->get('/cursos/:id/', function ($id) use($app){
 	$conn = getConnection();
+	$sql = "SELECT C.id_curso,C.categoria,C.titulo,C.subtitulo,C.img,C.url,C.requeriment,C.description,
+			U.id id_autor,U.nombre,U.fbid,U.puntos,U.bio biografia,U.google,U.twitter
+			FROM cursos C INNER JOIN usuarios U ON (C.autor = U.id)
+			WHERE id_curso=? AND public='YES'";
 
 	try{
-		$dbh = $conn->prepare("SELECT * FROM cursos WHERE id_curso=:param1 AND public='YES'");
-		$dbh->execute(array('param1'=>$id));
+		$dbh = $conn->prepare($sql);
+		$dbh->execute(array($id));
 		$cursos = $dbh->fetchAll(PDO::FETCH_ASSOC);
 
 		$app->response->headers->set("Content-type", "application/json");
@@ -50,12 +58,45 @@ $app->get('/cursos/:id/', function ($id) use($app){
 });
 
 // Mostramos las discusiones de un curso
-$app->get('/cursos/:id/discusiones/', function ($id) use($app){
+$app->get('/cursos/:id/discusiones/:type/:start/:user', function ($id,$type,$start,$user) use($app){
 	$conn = getConnection();
+	$limit = 10;
+	$sql = "";
+
+	switch($type){
+		case 'nuevas':
+			$sql = "SELECT D.id_discucion,D.titulo,D.contenido,D.respuestas,D.votos,D.link,D.fecha,
+					U.nombre,U.fbid,U.id id_user,U.avatar,U.registro
+					FROM discucion D INNER JOIN usuarios U ON (D.autor = U.id)
+					WHERE id_curso=?
+					ORDER BY D.fecha DESC LIMIT $start,$limit";
+			break;
+		case 'populares':
+			$sql = "SELECT D.id_discucion,D.titulo,D.contenido,D.respuestas,D.votos,D.link,D.fecha,
+					U.nombre,U.fbid,U.id id_user,U.avatar,U.registro
+					FROM discucion D INNER JOIN usuarios U ON (D.autor = U.id)
+					WHERE id_curso=? AND respuestas='0'
+					ORDER BY D.votos DESC, D.fecha DESC LIMIT $start,$limit";
+			break;
+		case 'no':
+			$sql = "SELECT D.id_discucion,D.titulo,D.contenido,D.respuestas,D.votos,D.link,D.fecha,
+					U.nombre,U.fbid,U.id id_user,U.avatar,U.registro
+					FROM discucion D INNER JOIN usuarios U ON (D.autor = U.id)
+					WHERE id_curso=? AND respuestas='0'
+					ORDER BY D.fecha DESC LIMIT $start,$limit";
+			break;
+		case 'propias':
+			$sql = "SELECT D.id_discucion,D.titulo,D.contenido,D.respuestas,D.votos,D.link,D.fecha,
+					U.nombre,U.fbid,U.id id_user,U.avatar,U.registro
+					FROM discucion D INNER JOIN usuarios U ON (D.autor = U.id)
+					WHERE id_curso=? AND D.autor=$user
+					ORDER BY D.fecha DESC LIMIT $start,$limit";
+			break;
+	}
 
 	try{
-		$dbh = $conn->prepare("SELECT * FROM discucion WHERE id_curso=:param1");
-		$dbh->execute(array('param1'=>$id));
+		$dbh = $conn->prepare($sql);
+		$dbh->execute(array($id));
 		$cursos = $dbh->fetchAll(PDO::FETCH_ASSOC);
 
 		$app->response->headers->set("Content-type", "application/json");
