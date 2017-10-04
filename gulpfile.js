@@ -6,8 +6,8 @@ var gulp = require('gulp'),
 // Tarea para crear el servidor
 gulp.task('connect-sync', function() {
   connect.server({
-    base: '.',
-    ini: '/etc/php/7.0/cli/php.ini',
+    base: './web',
+    ini: '/etc/php/7.0/cli/php.ini'
   }, function (){
     browserSync({
       proxy: '127.0.0.1:8000'
