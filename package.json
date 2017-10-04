@@ -1,0 +1,30 @@
+{
+  "name": "api-php-codeando",
+  "version": "1.0.0",
+  "description": "API PHP codeando",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pauloandradecode/api-php-codeando.git"
+  },
+  "keywords": [
+    "php",
+    "server",
+    "gulp"
+  ],
+  "author": "Paulo Andrade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pauloandradecode/api-php-codeando/issues"
+  },
+  "homepage": "https://github.com/pauloandradecode/api-php-codeando#readme",
+  "devDependencies": {
+    "browser-sync": "*",
+    "gulp": "*",
+    "gulp-connect-php": "*"
+  }
+}
