@@ -5,30 +5,44 @@ Archivo principal del API
 Proyecto: API Rest Full - Codeando.org
 Author: Paulo Andrade
 Email: source.compug@mail.com
-Web: http://www.pauloandrade1.com
+
+Nota: Guia de cambios https://www.slimframework.com/docs/start/upgrade.html
 ************************************************/
 
-// Para sesiones
-session_cache_expire(false);
-session_start();
+// Definimos la constante de seguridad
+define('SEGURIDAD', true);
 
-// Seguridad
-if(empty($_SESSION['logged_in'])){
-	$_SESSION['logged_in'] = false;
-}
+// Incorporamos las clases Request y Response
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 // Cargamos el framework slim
-require_once 'Slim/Slim.php';
-\Slim\Slim::registerAutoloader();
+require __DIR__.'/../vendor/autoload.php';
 
-// Creamos una aplicacion
-$app = new \Slim\Slim();
+// Configuracion de la app
+$config = [
+    'displayErrorDetails' => true,
+    'addContentLengthHeader' => false,
+    'db' => [
+        'host' => 'localhost',
+        'user' => 'root',
+        'pass' => 'root',
+        'dbname' => 'codeando'
+    ]
+];
 
+// Creamos la aplicacion
+$app = new \Slim\App(['settings' => $config]);
+
+// Contenedor de dependencias
+require_once __DIR__.'/app/container/container.php';
+
+/*
 // Access-Control headers are received during OPTIONS requests
 if(isset($_SERVER['HTTP_ORIGIN'])){
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
     header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    header('Access-Control-Max-Age: 86400');    // cache para 1 dia
 }
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
@@ -40,31 +54,25 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
     }
 }
+*/
 
-// instead of mapping:
-$app->options('/(:x+)', function() use ($app) {
-    //...return correct headers...
-    $app->response->setStatus(200);
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
 });
 
-// Configuramos las vistas
-$app->config(array(
-    'templates.path' => 'app/views',
-));
-
-// Configuramos la pagina 404
-$app->notFound(function () use ($app) {
-    $app->render('404.php', array('title_page'=>'Página no encontrada | '));
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
-
-// Definimos la constante de seguridad
-define('SEGURIDAD', true);
 
 // Incluimos los archivos de la aplicacion
-require_once 'app/db.php';
+//require_once 'app/db.php';
 //require_once 'app/hook.php';
-require_once 'app/middleware/middleware.php';
-require_once 'app/filters.php';
+//require_once 'app/middleware/middleware.php';
+//require_once 'app/filters.php';
 require_once 'app/routes/routes.php';
 require_once 'app/routes/routes_recursos.php';
 

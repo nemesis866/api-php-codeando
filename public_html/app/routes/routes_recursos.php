@@ -5,12 +5,26 @@ Creamos las rutas con los verbos http
 Proyecto: API Rest Full - Codeando.org
 Author: Paulo Andrade
 Email: source.compug@mail.com
-Web: http://www.pauloandrade1.com
 ************************************************/
 
 // Verificamos si la constante de seguridad esta definida
 if(!defined('SEGURIDAD')) die('Acceso denegado');
 
+// Grupo para rutas de la API
+$app->get('/api/login/{username}/{pass}', function($req, $res, $args){
+		// Obtenemos los usuarios
+		$data = [];
+		$data['username'] = $args['username'];
+		$data['pass'] = $args['pass'];
+		// Realizamos la consulta
+		$mapper = new UserMapper($this->db);
+		$user = $mapper->getUserByLogin(new UserEntity($data));
+		// Mandamos la respuesta en formato Json
+		$res = $res->withJson($user, 200);
+		return $res;
+	});
+
+/*
 // Mostramos todos los cursos
 $app->get('/cursos/', function () use($app){
 	$conn = getConnection();
@@ -243,8 +257,8 @@ $app->post('/contact/', function () use($app){
 	$conn = getConnection();
 	$conn->beginTransaction();
 
-	/* Informacion sobre como recibir parametros post desde array
-	http://stackoverflow.com/questions/28073480/how-to-access-a-json-request-body-of-a-post-request-in-slim */
+	// Informacion sobre como recibir parametros post desde array
+	http://stackoverflow.com/questions/28073480/how-to-access-a-json-request-body-of-a-post-request-in-slim
 	$json = $app->request->getBody();
     $data = json_decode($json, true);
 
@@ -287,3 +301,4 @@ $app->get('/autor/:id/', function ($id) use($app){
 
 	$conn = null;
 });
+*/

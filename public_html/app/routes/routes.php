@@ -5,25 +5,26 @@ Creamos las rutas de la aplicación
 Proyecto: API Rest Full - Codeando.org
 Author: Paulo Andrade
 Email: source.compug@mail.com
-Web: http://www.pauloandrade1.com
 ************************************************/
 
 // Verificamos si la constante de seguridad esta definida
 if(!defined('SEGURIDAD')) die('Acceso denegado');
 
 // Ruta principal
-$app->get('/', function () use($app){
-	$app->render('index.php', array('title_page'=>'Bienvenidos | '));
+$app->get('/', function (Request $req, $res, $args = []){
+	return $res->write('Hello API');
+	//$res->render('index.php', array('title_page'=>'Bienvenidos | '));
 });
 
+/*
 // Ruta contacto
-$app->get('/contacto/', function () use($app){
-	$app->render('contacto.php', array('title_page'=>'Contactanos | '));
+$app->get('/contacto/', function ($req, $res, $args = []) use($app){
+	//$app->render('contacto.php', array('title_page'=>'Contactanos | '));
 });
 
 // Ruta documentación
-$app->get('/docs/:url/', function ($url) use($app){
-	$app->render('documentacion.php', array('url'=>$url,
+$app->get('/docs/:url/', function ($req, $res, $args = []) use($app){
+	//$app->render('documentacion.php', array('url'=>$url,
 											'title_page'=>'Documentación | '));
 });
 
@@ -58,3 +59,4 @@ $app->group('/admin/', 'admin', function () use($app){
 												'title_page'=>$title_page));
 	});
 });
+*/
