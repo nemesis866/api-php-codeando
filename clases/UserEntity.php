@@ -37,7 +37,7 @@ class UserEntity
 		$this->pass = (isset($data['pass'])) ? $data['pass'] : '';
 		$this->points = (isset($data['points'])) ? $data['points'] : '';
 		$this->lastaccess = (isset($data['lastaccess'])) ? $data['lastaccess'] : '';
-		$this->username = (!isset($data['username'])) ? $data['username'] : '';
+		$this->username = (isset($data['username'])) ? $data['username'] : '';
 	}
 
 	/**************************************************

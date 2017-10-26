@@ -16,4 +16,16 @@ abstract class Mapper
 	{
 		$this->db = $db;
 	}
+
+	// Para generar tokkens
+	public function newTokken(int $length){
+		$str = 'abcdefghijklmnopqrstuvwxyz1234567890';
+		$tokken = '';
+
+		for($i = 0; $i < $length; $i++){
+			$tokken .= substr($str,rand(0,36),1);
+		}
+		
+		return $tokken;
+	}
 }

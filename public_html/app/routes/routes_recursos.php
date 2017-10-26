@@ -11,11 +11,13 @@ Email: source.compug@mail.com
 if(!defined('SEGURIDAD')) die('Acceso denegado');
 
 // Grupo para rutas de la API
-$app->get('/api/login/{username}/{pass}', function($req, $res, $args){
+$app->group('/api', function (){
+	// Ruta para iniciar sesion
+	$this->get('/login/{username}/{pass}', function($req, $res, $args){
 		// Obtenemos los usuarios
 		$data = [];
-		$data['username'] = $args['username'];
-		$data['pass'] = $args['pass'];
+		$data['username'] = filter_var($args['username'], FILTER_SANITIZE_STRING);
+		$data['pass'] = filter_var($args['pass'], FILTER_SANITIZE_STRING);
 		// Realizamos la consulta
 		$mapper = new UserMapper($this->db);
 		$user = $mapper->getUserByLogin(new UserEntity($data));
@@ -23,6 +25,23 @@ $app->get('/api/login/{username}/{pass}', function($req, $res, $args){
 		$res = $res->withJson($user, 200);
 		return $res;
 	});
+	// Ruta para registrarse
+	$this->post('/login', function ($req, $res){
+		// Obtenemos las variables
+		$data = $req->getParsedBody();
+		$user_data = [
+			'username' => filter_var($data['username'], FILTER_SANITIZE_STRING),
+			'pass' => filter_var($data['pass'], FILTER_SANITIZE_STRING),
+			'email' => filter_var($data['email'], FILTER_SANITIZE_STRING)
+		];
+		// Realizamos la transaccion
+		$mapper = new UserMapper($this->db);
+		$user = $mapper->save(new UserEntity($user_data));
+		// Mandamos la respuesta en formato Json
+		$res = $res->withJson($user, 200);
+		return $res;
+	});
+});
 
 /*
 // Mostramos todos los cursos

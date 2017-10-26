@@ -11,7 +11,15 @@ Email: source.compug@mail.com
 if(!defined('SEGURIDAD')) die('Acceso denegado');
 
 // Ruta principal
-$app->get('/', function (Request $req, $res, $args = []){
+$app->get('/', function ($req, $res, $args = []){
+	$this->mailer->send('mail.phtml', [] , function($message)
+	{
+		$message->to('paulo.gonzalez.sc@itszapopan.edu.mx');
+		$message->subject('Prueba');
+		$message->from('admin@codeando.org');
+		$message->fromName('Codeando');
+	});
+
 	return $res->write('Hello API');
 	//$res->render('index.php', array('title_page'=>'Bienvenidos | '));
 });
