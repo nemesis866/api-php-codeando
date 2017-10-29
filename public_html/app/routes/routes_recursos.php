@@ -10,14 +10,33 @@ Email: source.compug@mail.com
 // Verificamos si la constante de seguridad esta definida
 if(!defined('SEGURIDAD')) die('Acceso denegado');
 
+// Incorporamos las clases Request y Response
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+// Cargamos el framework slim
+require __DIR__.'/../../../vendor/autoload.php';
+
 // Grupo para rutas de la API
 $app->group('/api', function (){
+	// Ruta para completar el registro
+	$this->get('/login/{tokken}', function (Request $req, Response $res, $args){
+		// Obtenemos el tokken
+		$tokken = $args['tokken'];
+
+		// Realizamos la operacion
+		$mapper = new UserMapper($this->db);
+		$user = $mapper->getUserByTokken($tokken);
+
+		$res = $res->withJson($user, 200);
+		return $res;
+	});
 	// Ruta para iniciar sesion
-	$this->get('/login/{username}/{pass}', function($req, $res, $args){
+	$this->get('/login/{username}/{pass}', function(Request $req, Response $res, $args){
 		// Obtenemos los usuarios
 		$data = [];
-		$data['username'] = filter_var($args['username'], FILTER_SANITIZE_STRING);
-		$data['pass'] = filter_var($args['pass'], FILTER_SANITIZE_STRING);
+		$data['username'] = $args['username'];
+		$data['pass'] = $args['pass'];
 		// Realizamos la consulta
 		$mapper = new UserMapper($this->db);
 		$user = $mapper->getUserByLogin(new UserEntity($data));
@@ -26,17 +45,32 @@ $app->group('/api', function (){
 		return $res;
 	});
 	// Ruta para registrarse
-	$this->post('/login', function ($req, $res){
+	$this->post('/login', function (Request $req, Response $res){
 		// Obtenemos las variables
 		$data = $req->getParsedBody();
 		$user_data = [
-			'username' => filter_var($data['username'], FILTER_SANITIZE_STRING),
-			'pass' => filter_var($data['pass'], FILTER_SANITIZE_STRING),
-			'email' => filter_var($data['email'], FILTER_SANITIZE_STRING)
+			'username' => $data['username'],
+			'pass' => $data['pass'],
+			'email' => $data['email']
 		];
 		// Realizamos la transaccion
 		$mapper = new UserMapper($this->db);
 		$user = $mapper->save(new UserEntity($user_data));
+
+		// verificamos si no hubo error
+		if(!isset($user['error'])){
+			// Agregamos el tooken
+			$user_data['tokken'] = $user['tokken'];
+			// Enviamos email
+			$this->mailer->send('register.phtml', $user_data , function($message) use ($user_data)
+			{
+				$message->to($user_data['email']);
+				$message->subject('Codeando - Solicitud de registro');
+				$message->from('admin@codeando.org');
+				$message->fromName('Codeando');
+			});
+		}
+
 		// Mandamos la respuesta en formato Json
 		$res = $res->withJson($user, 200);
 		return $res;

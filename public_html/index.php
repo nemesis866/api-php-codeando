@@ -12,10 +12,6 @@ Nota: Guia de cambios https://www.slimframework.com/docs/start/upgrade.html
 // Definimos la constante de seguridad
 define('SEGURIDAD', true);
 
-// Incorporamos las clases Request y Response
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-
 // Cargamos el framework slim
 require __DIR__.'/../vendor/autoload.php';
 

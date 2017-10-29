@@ -25,19 +25,43 @@ class UserEntity
 	// Constructor
 	public function __construct(array $data)
 	{
-		// Verificamos que existan
-		$this->lastname = (isset($data['lastname'])) ? $data['lastname'] : '';
-		$this->avatar = (isset($data['avatar'])) ? $data['avatar'] : '';
-		$this->email = (isset($data['email'])) ? $data['email'] : '';
-		$this->fbid = (isset($data['fbid'])) ? $data['fbid'] : '';
-		$this->date = (isset($data['date'])) ? $data['date'] : '';
-		$this->id_user = (isset($data['id_user'])) ? $data['id_user'] : '';
-		$this->level = (isset($data['level'])) ? $data['level'] : '';
-		$this->name = (isset($data['name'])) ? $data['name'] : '';
-		$this->pass = (isset($data['pass'])) ? $data['pass'] : '';
-		$this->points = (isset($data['points'])) ? $data['points'] : '';
-		$this->lastaccess = (isset($data['lastaccess'])) ? $data['lastaccess'] : '';
-		$this->username = (isset($data['username'])) ? $data['username'] : '';
+		// Verificamos que existan y limpiamos las variables
+		if(isset($data['lastname'])){
+			$this->lastname = $this->sanitize($data['lastname']);
+		}
+		if(isset($data['avatar'])){
+			$this->avatar = $this->sanitize($data['avatar']);
+		}
+		if(isset($data['email'])){
+			$this->email = $this->sanitize($data['email']);
+		}
+		if(isset($data['fbid'])){
+			$this->fbid = $this->sanitize($data['fbid']);
+		}
+		if(isset($data['date'])){
+			$this->date = $this->sanitize($data['date']);
+		}
+		if(isset($data['id_user'])){
+			$this->id_user = $this->sanitize($data['id_user']);
+		}
+		if(isset($data['level'])){
+			$this->level = $this->sanitize($data['level']);
+		}
+		if(isset($data['name'])){
+			$this->name = $this->sanitize($data['name']);
+		}
+		if(isset($data['pass'])){
+			$this->pass = $this->sanitize($data['pass']);
+		}
+		if(isset($data['points'])){
+			$this->points = $this->sanitize($data['points']);
+		}
+		if(isset($data['lastaccess'])){
+			$this->lastaccess = $this->sanitize($data['lastaccess']);
+		}
+		if(isset($data['username'])){
+			$this->username = $this->sanitize($data['username']);
+		}
 	}
 
 	/**************************************************
@@ -64,6 +88,10 @@ class UserEntity
 	public function getPass()
 	{
 		return md5($this->pass);
+	}
+	public function getPassWithoutMd5()
+	{
+		return $this->pass;
 	}
 	public function getUserName()
 	{

@@ -33,32 +33,133 @@ class UserMapper extends Mapper
 			return $stmt->fetchAll();
 		}
 	}
-	// Almacenamos un usuario
-	public function save(UserEntity $user)
+	// Completamos el registro
+	public function getUserByTokken(string $tokken)
 	{
-		// Generamos un tokken
-		$tokken = $this->newTokken(200);
-
-		$this->db->beginTransaction(); // Iniciamos transaccion
-
-		$sql = "INSERT INTO temp_users (username, pass, email, tokken) VALUES (:username,:pass,:email,:tokken)";
+		// Obtenemos los datos del usuario
+		$sql = "SELECT username,pass,email FROM temp_users WHERE tokken=:tokken";
 		$stmt = $this->db->prepare($sql);
 		$result = $stmt->execute([
-			'username' => $user->getUserName(),
-			'pass' => $user->getPass(),
-			'email' => $user->getEmail(),
 			'tokken' => $tokken
 		]);
 
-		$id = $this->db->lastInsertId(); // Obtenemos el id
+		// Convertimos en un array
+		$data = $stmt->fetch();
 
-		$this->db->commit(); // Procesamos transaccion
+		// verificamos si esta disponible
+		if(count($data) == 0){
+			// Si no existe el tooken
+			return array('error'=>'Lo sentimos, debe completar su registro de nuevo');
+		} else {
+			// Si existe
+			$user = new UserEntity($data);
 
-		if(!$result){
-			throw new Exception("Error al guardar el registro");
+			// Insertamos los datos a la tabla users
+			$this->db->beginTransaction(); // Iniciamos transaccion
+
+			$sql = "INSERT INTO users (username, pass, email) VALUES (:username,:pass,:email)";
+			$stmt = $this->db->prepare($sql);
+			$result = $stmt->execute([
+				'username' => $user->getUserName(),
+				'pass' => $user->getPassWithoutMd5(),
+				'email' => $user->getEmail()
+			]);
+
+			$id = $this->db->lastInsertId(); // Obtenemos el id
+
+			$this->db->commit(); // Procesamos transaccion
+
+			// Eliminamos de la tabla temporal
+			$this->db->beginTransaction(); // Iniciamos transaccion
+
+			$sql = "DELETE FROM temp_users WHERE tokken=:tokken";
+			$stmt = $this->db->prepare($sql);
+			$result = $stmt->execute([
+				'tokken' => $tokken
+			]);
+
+			$this->db->commit(); // Procesamos transaccion
+
+			return $id;
+		}
+	}
+	// Almacenamos un usuario
+	public function save(UserEntity $user)
+	{
+		/* Comprobamos que no este repetido el email [users]*/
+		$sql = "SELECT * FROM users WHERE email=:email";
+		$stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			'email' => $user->getEmail()
+		]);
+
+		// verificamos si ya existe
+		if(count($stmt->fetchAll()) > 0){
+			return array('error'=>'El email ya esta en uso, intente con otro');
 		}
 
-		return $id;
+		/* Comprobamos si ya esta en la tabla temporal */
+		$sql = "SELECT * FROM temp_users WHERE email=:email";
+		$stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			'email' => $user->getEmail()
+		]);
+
+		// Generamos un tokken
+		$tokken = $this->newTokken(200);
+
+		// verificamos si existe
+		if(count($stmt->fetchAll()) > 0){
+			// existe, entonces actualizamos
+			$this->db->beginTransaction(); // Iniciamos transaccion
+
+			$sql = "UPDATE temp_users SET username=:username,pass=:pass,tokken=:tokken WHERE email=:email";
+			$stmt = $this->db->prepare($sql);
+			$result = $stmt->execute([
+				'username' => $user->getUserName(),
+				'pass' => $user->getPass(),
+				'tokken' => $tokken,
+				'email' => $user->getEmail()
+			]);
+
+			$id = $this->db->lastInsertId(); // Obtenemos el id
+
+			$this->db->commit(); // Procesamos transaccion
+
+			if(!$result){
+				throw new Exception("Error al guardar el registro");
+			}
+
+			// Armamos el array para resultados
+			$data = ['id'=>$id,'tokken'=>$tokken];
+
+			return $data;
+		} else {
+			/* no existe, Proceso normal */
+			$this->db->beginTransaction(); // Iniciamos transaccion
+
+			$sql = "INSERT INTO temp_users (username, pass, email, tokken) VALUES (:username,:pass,:email,:tokken)";
+			$stmt = $this->db->prepare($sql);
+			$result = $stmt->execute([
+				'username' => $user->getUserName(),
+				'pass' => $user->getPass(),
+				'email' => $user->getEmail(),
+				'tokken' => $tokken
+			]);
+
+			$id = $this->db->lastInsertId(); // Obtenemos el id
+
+			$this->db->commit(); // Procesamos transaccion
+
+			if(!$result){
+				throw new Exception("Error al guardar el registro");
+			}
+
+			// Armamos el array para resultados
+			$data = ['id'=>$id,'tokken'=>$tokken];
+
+			return $data;
+		}
 	}
 	// Actualizamos un usuario
 	public function update(UserEntity $user)
