@@ -56,6 +56,12 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
+$app->add(new \Slim\Middleware\Session([
+  'name' => 'codeando_session',
+  'autorefresh' => true,
+  'lifetime' => '2 hour'
+]));
+
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response

@@ -50,3 +50,8 @@ $container['mailer'] = function ($c) {
 
 	return new Mailer($c->view, $mailer);
 };
+
+// Dependencia para sesiones
+$container['session'] = function ($c) {
+  return new \SlimSession\Helper;
+};

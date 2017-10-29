@@ -19,52 +19,7 @@ require __DIR__.'/../../../vendor/autoload.php';
 
 // Ruta principal
 $app->get('/', function (Request $req, Response $res, $args = []){
-	return $this->view->render($res, 'register.phtml',[]);
+	//return $this->view->render($res, 'register.phtml',[]);
 	return $res->write('Hello API');
 	//$res->render('index.php', array('title_page'=>'Bienvenidos | '));
 });
-
-/*
-// Ruta contacto
-$app->get('/contacto/', function ($req, $res, $args = []) use($app){
-	//$app->render('contacto.php', array('title_page'=>'Contactanos | '));
-});
-
-// Ruta documentación
-$app->get('/docs/:url/', function ($req, $res, $args = []) use($app){
-	//$app->render('documentacion.php', array('url'=>$url,
-											'title_page'=>'Documentación | '));
-});
-
-// Ruta login
-$app->get('/login/', 'login', function () use($app){
-	$app->render('login.php', array('title_page'=>'Login | '));
-});
-
-// Ruta logout
-$app->get('/logout/', function () use($app){
-	session_destroy();
-	$app->redirect('/');
-});
-
-// Ruta admin
-$app->group('/admin/', 'admin', function () use($app){
-	$app->get('/', function () use($app){
-		$title_page = 'Administración | ';
-		$app->render('admin.php', array('title_page'=>$title_page));
-	});
-	$app->get('docs/', function () use($app){
-		$title_page = 'Administración | ';
-		$app->render('admin_docs.php', array('title_page'=>$title_page));
-	});
-	$app->get('docs/new/', function () use($app){
-		$title_page = 'Administración | ';
-		$app->render('admin_docs_new.php', array('title_page'=>$title_page));
-	});
-	$app->get('docs/edit/:id/', function ($id) use($app){
-		$title_page = 'Administración | ';
-		$app->render('admin_docs_edit.php', array('id'=>$id,
-												'title_page'=>$title_page));
-	});
-});
-*/

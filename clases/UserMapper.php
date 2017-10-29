@@ -22,20 +22,28 @@ class UserMapper extends Mapper
 	// Obtenemos un usuario desde el logueo
 	public function getUserByLogin(UserEntity $user)
 	{
-		$sql = "SELECT * FROM users WHERE username=:username and pass=:pass";
+		$sql = "SELECT id_user,avatar,email,fbid,level,name,lastname,lastaccess,username FROM users WHERE username=:username and pass=:pass";
 		$stmt = $this->db->prepare($sql);
 		$result = $stmt->execute([
 			'username' => $user->getUserName(),
 			'pass' => $user->getPass()
 		]);
 
-		if($result){
-			return $stmt->fetchAll();
+		// Convertimos en un array
+		$data = $stmt->fetchAll();
+
+		if(count($data) == 0){
+			return new UserEntity(array('error'=>'nothing'));
+		} else {
+			return new UserEntity($data[0]);
 		}
 	}
 	// Completamos el registro
-	public function getUserByTokken(string $tokken)
+	public function getUserByTokken(UserEntity $user)
 	{
+		// Obtenemos el tokken
+		$tokken = $user->getTokken();
+
 		// Obtenemos los datos del usuario
 		$sql = "SELECT username,pass,email FROM temp_users WHERE tokken=:tokken";
 		$stmt = $this->db->prepare($sql);
@@ -44,7 +52,7 @@ class UserMapper extends Mapper
 		]);
 
 		// Convertimos en un array
-		$data = $stmt->fetch();
+		$data = $stmt->fetchAll();
 
 		// verificamos si esta disponible
 		if(count($data) == 0){
@@ -52,7 +60,7 @@ class UserMapper extends Mapper
 			return array('error'=>'Lo sentimos, debe completar su registro de nuevo');
 		} else {
 			// Si existe
-			$user = new UserEntity($data);
+			$user = new UserEntity($data[0]);
 
 			// Insertamos los datos a la tabla users
 			$this->db->beginTransaction(); // Iniciamos transaccion
@@ -80,7 +88,7 @@ class UserMapper extends Mapper
 
 			$this->db->commit(); // Procesamos transaccion
 
-			return $id;
+			return ['id'=>$id, 'error'=>''];
 		}
 	}
 	// Almacenamos un usuario
@@ -96,6 +104,18 @@ class UserMapper extends Mapper
 		// verificamos si ya existe
 		if(count($stmt->fetchAll()) > 0){
 			return array('error'=>'El email ya esta en uso, intente con otro');
+		}
+
+		/* Comprobamos que no este repetido el username [users]*/
+		$sql = "SELECT * FROM users WHERE username=:username";
+		$stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			'username' => $user->getUserName()
+		]);
+
+		// verificamos si ya existe
+		if(count($stmt->fetchAll()) > 0){
+			return array('error'=>'El username ya esta en uso, intente con otro');
 		}
 
 		/* Comprobamos si ya esta en la tabla temporal */
@@ -131,7 +151,7 @@ class UserMapper extends Mapper
 			}
 
 			// Armamos el array para resultados
-			$data = ['id'=>$id,'tokken'=>$tokken];
+			$data = ['id'=>$id,'tokken'=>$tokken, 'error'=>''];
 
 			return $data;
 		} else {
@@ -156,7 +176,7 @@ class UserMapper extends Mapper
 			}
 
 			// Armamos el array para resultados
-			$data = ['id'=>$id,'tokken'=>$tokken];
+			$data = ['id'=>$id,'tokken'=>$tokken, 'error'=>''];
 
 			return $data;
 		}

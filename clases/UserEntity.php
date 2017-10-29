@@ -7,7 +7,7 @@ Author: Paulo Andrade
 Email: source.compug@mail.com
 ************************************************/
 
-class UserEntity
+class UserEntity extends Entity
 {
 	protected $avatar;
 	protected $date;
@@ -20,6 +20,7 @@ class UserEntity
 	protected $level;
 	protected $pass;
 	protected $points;
+	protected $tokken;
 	protected $username;
 
 	// Constructor
@@ -59,6 +60,9 @@ class UserEntity
 		if(isset($data['lastaccess'])){
 			$this->lastaccess = $this->sanitize($data['lastaccess']);
 		}
+		if(isset($data['tokken'])){
+			$this->tokken = $this->sanitize($data['tokken']);
+		}
 		if(isset($data['username'])){
 			$this->username = $this->sanitize($data['username']);
 		}
@@ -93,8 +97,28 @@ class UserEntity
 	{
 		return $this->pass;
 	}
+	public function getTokken()
+	{
+		return $this->tokken;
+	}
 	public function getUserName()
 	{
 		return $this->username;
+	}
+	public function getFbid()
+	{
+		return $this->fbid;
+	}
+	public function getAvatar()
+	{
+		return $this->avatar;
+	}
+	public function getLevel()
+	{
+		return $this->level;
+	}
+	public function getLastAccess()
+	{
+		return $this->lastaccess;
 	}
 }
