@@ -48,12 +48,12 @@ $app->group('/api', function (){
 			});
 
 			// Redireccionamos
-			return $res->withStatus(302)->withHeader('Location', 'http://accounts.codeando.org');
+			return $res->withStatus(302)->withHeader('Location', 'https://accounts.codeando.org');
 		} else {
 			// Enviamos respuesta (error)
 			$res = $res->withJson($user, 200);
 			// Redireccionamos
-			return $res->withStatus(302)->withHeader('Location', 'http://codeando.org');
+			return $res->withStatus(302)->withHeader('Location', 'https://codeando.org');
 		}
 	});
 	// Ruta para iniciar sesion
