@@ -88,8 +88,49 @@ class UserMapper extends Mapper
 
 			$this->db->commit(); // Procesamos transaccion
 
-			return ['id'=>$id, 'error'=>''];
+			return ['id'=>$id, 'username'=>$user->getUserName(), 'email'=>$user->getEmail(),'error'=>''];
 		}
+	}
+	// Recuperamos el password
+	public function recoverPass(UserEntity $user)
+	{
+		/* Comprobamos que exista el email*/
+		$sql = "SELECT * FROM users WHERE email=:email";
+		$stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			'email' => $user->getEmail()
+		]);
+
+		$data = $stmt->fetchAll();
+
+		// verificamos si ya existe
+		if(count($data) == 0){
+			return array('error'=>'El email no esta registrado, intente con otro');
+		}
+
+		// Obtenemos los datos
+		$user = new UserEntity($data[0]);
+
+		// Obtenemos un nuevo password
+		$pass = $this->newTokken(10);
+		$md5 = md5($pass);
+
+		// Actualizamos el password
+		$this->db->beginTransaction(); // Iniciamos transaccion
+
+		$sql = "UPDATE users SET pass=:pass WHERE email=:email";
+		$stmt = $this->db->prepare($sql);
+		$result = $stmt->execute([
+			'pass' => $md5,
+			'email' => $user->getEmail()
+		]);
+
+		$id = $this->db->lastInsertId(); // Obtenemos el id
+
+		$this->db->commit(); // Procesamos transaccion
+
+		// armamos la respuesta
+		return array('id'=>$id, 'username'=>$user->getUserName(),'email'=>$user->getEmail(), 'pass'=>$pass, 'error'=>'');
 	}
 	// Almacenamos un usuario
 	public function save(UserEntity $user)

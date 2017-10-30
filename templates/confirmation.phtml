@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bienvenido - Codeando</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		*:before,
+		*:after {
+		  box-sizing: inherit;
+		}
+		a{
+			color: #DDA02C;
+			text-decoration: none;
+			transition: all 0.25s ease;
+		}
+		a:hover{
+			color: #222;
+			text-decoration: none;
+		}
+		body{
+			color: #414141;
+			font-family: 'VarelaRound', helvetica, arial;
+			font-size: 18px;
+			line-height: 1.4;
+			background-color: #fcfcfc;
+		}
+		html{
+			height: 100%;
+			box-sizing: border-box;
+		}
+		#wrapper{
+			background-color: #fcfcfc;
+			margin: 0 auto;
+			max-width: 1100px;
+			padding: 20px 10px;
+			position: relative;
+		}
+		.center{
+			text-align: center;
+		}
+		header{
+			font-size: 0;
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 20px 10px;
+		}
+		header #header{
+			display: inline-block;
+			font-size: 16px;
+			vertical-align: middle;
+			width: 40%;
+		}
+		header #header a{
+			color: #0379BF;
+			transition: all 0.25s ease;
+		}
+		header #header a:hover{
+			color: #36aceF;
+		}
+		header #header h1,
+		header #header p{
+			font-size: 22px;
+		}
+		#home{
+			text-align: center;
+		}
+		#home h2{
+			font-size: 2em;
+			padding: 25px 0;
+		}
+		#footer{
+			background-color: #F4F7F8;
+			color: #666;
+			padding: 3em 0;
+			text-align: center;
+		}
+		#footer a{
+			color: #666;
+			transition: all 0.25 ease;
+		}
+		#footer a:hover{
+			color: #999;
+		}
+		#presentacion
+		{
+			background-color: #0379BF;
+			color: #fcfcfc;
+			padding: 3em 0;
+		}
+		#presentacion #box
+		{
+			font-size: 0;
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+		#presentacion #box #box-1
+		{
+			display: inline-block;
+			font-size: 16px;
+			vertical-align: middle;
+			width: 48%;
+			padding-left: 2%;
+		}
+		#presentacion #box #box-1 h2
+		{
+			font-size: 40px;
+		}
+		#presentacion #box #box-1 p
+		{
+			font-size: 1.2em;
+		}
+		#presentacion #box #box-2
+		{
+			display: inline-block;
+			font-size: 16px;
+			text-align: center;
+			vertical-align: middle;
+			width: 50%;
+		}
+		#presentacion #box #box-2 img
+		{
+			width: 300px;
+		}
+		#presentacion #box .curso img
+		{
+			height: 300px;
+			border-radius: 50%;
+		}
+		@media (min-width: 300px) and (max-width: 480px){
+			header #header
+			{
+				width: 100%;
+			}
+			#presentacion #box #box-1
+			{
+				width: 98%;
+			}
+			#presentacion #box #box-1 h2
+			{
+				font-size: 20px;
+			}
+			#presentacion #box #box-2
+			{
+				width: 100%;
+				margin-top: 10px;
+			}
+			#presentacion #box #box-2 img
+			{
+				width: 150px;
+			}
+			#presentacion #box .curso img
+			{
+				height: 150px;
+			}
+			#presentacion #box #box-2 #login
+			{
+				margin: 0 auto;
+			}
+		}
+		@media (min-width: 481px) and (max-width: 750px){
+			#presentacion #box #box-1
+			{
+				width: 98%;
+			}
+			#presentacion #box #box-1 h2
+			{
+				font-size: 30px;
+			}
+			#presentacion #box #box-2
+			{
+				width: 100%;
+				margin-top: 10px;
+			}
+			#presentacion #box #box-2 img
+			{
+				width: 200px;
+			}
+			#presentacion #box .curso img
+			{
+				height: 200px;
+			}
+			#presentacion #box #box-2 #login
+			{
+				margin: 0 auto;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div id="header">
+			<h1><a href="http://codeando.org">CODEANDO</a></h1>
+		</div>
+	</header>
+	<div id="presentacion">
+		<div id="box">
+			<div id="box-1" class="center">
+				<h2>Bienvenido.</h2>
+				<p>En hora buena, ya formas parte de esta gran comunidad.</p>
+			</div>
+			<div id="box-2">
+				<img src="https://accounts.codeando.org/img/confirmation.png" alt="Bienvenido a codeando">
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="home">
+			<h2>Bienvenido a Codeando</h2>
+		</div>
+		<div>
+			<p>Estimado <?=$data['username']?>.</p>
+			<br>
+			<p>Nos complace mucho tenerl@ como un integrante de nuestra comunidad y le doy la más cordial bienvenida a nombre de todo el equipo de Codeando y muy particularmente del mío.</p>
+			<br>
+			<p>Nuestro plataforma cuenta con diversas herramientas para que su experiancia educativa sea de lo mejor con una curva de aprendizaje alta.</p>
+			<br>
+			<p>Me despido deseándole una gran experiencia.</p>
+			<br>
+			<p>ATENTAMENTE</p>
+			<p>Paulo Cesar Andrade Gonzalez</p>
+			<p>Codeando</p>
+		</div>
+		<div id="home">
+			<h2>Enlaces de interes</h2>
+		</div>
+		<div>
+			<p><a href="http://codeando.org">Codeando</a></p>
+			<p><a href="http://blog.codeando.org">Blog</a></p>
+			<p><a href="https://www.youtube.com/channel/UCS5t7Ynr2sPoWgUfsYHrksA">Youtube</a></p>
+			<p><a href="http://github.com/codeandomx">Github</a></p>
+			<p><a href="http://twitter.com/codeando_org">Twitter</a></p>
+		</div>
+	</div>
+	<div id="footer">
+		<p><a href="http://codeando.org">Codeando</a> <?php echo date('Y'); ?></p>
+	</div>
+	<script src="https://apis.google.com/js/platform.js"></script>
+</body>
+</html>

@@ -38,8 +38,17 @@ $app->group('/api', function (){
 			$session = $this->session;
 			$session->tokken = true;
 
+			// Enviamos email de bienvenida
+			$this->mailer->send('confirmation.phtml', $user , function($message) use ($user)
+			{
+				$message->to($user['email']);
+				$message->subject('Codeando - Bienvenid@');
+				$message->from('admin@codeando.org');
+				$message->fromName('Codeando');
+			});
+
 			// Redireccionamos
-			return $res->withStatus(302)->withHeader('Location', 'http://accounts.codeando.dev');
+			return $res->withStatus(302)->withHeader('Location', 'http://accounts.codeando.org');
 		} else {
 			// Enviamos respuesta (error)
 			$res = $res->withJson($user, 200);
@@ -100,6 +109,33 @@ $app->group('/api', function (){
 			{
 				$message->to($user_data['email']);
 				$message->subject('Codeando - Solicitud de registro');
+				$message->from('admin@codeando.org');
+				$message->fromName('Codeando');
+			});
+		}
+
+		// Mandamos la respuesta en formato Json
+		$res = $res->withJson($user, 200);
+		return $res;
+	});
+	// Ruta para recuperar contraseña
+	$this->post('/recover', function (Request $req, Response $res){
+		// Obtenemos las variables
+		$data = $req->getParsedBody();
+		$user_data = [
+			'email' => $data['email']
+		];
+		// Realizamos la transaccion
+		$mapper = new UserMapper($this->db);
+		$user = $mapper->recoverPass(new UserEntity($user_data));
+
+		// verificamos si no hubo error
+		if($user['error'] == ''){
+			// Enviamos email
+			$this->mailer->send('recover.phtml', $user , function($message) use ($user)
+			{
+				$message->to($user['email']);
+				$message->subject('Codeando - Recuperacion de password');
 				$message->from('admin@codeando.org');
 				$message->fromName('Codeando');
 			});
